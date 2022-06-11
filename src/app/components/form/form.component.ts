@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataFake, Departments} from "../interfaces/Form";
 import { FormService } from '../../services/form.service';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -23,7 +25,7 @@ export class FormComponent implements OnInit {
     model: [1, [Validators.required, Validators.min(1)]],
     fullName: ['', [Validators.required, Validators.minLength(6)]],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', [Validators.required, Validators.pattern('[- +()0-9]+')]],
+    phone: ['', [Validators.required, Validators.min(3000000000), Validators.pattern('[- +()0-9]+')], ],
     department: [1, [Validators.required, Validators.min(2)]],
     city: [1, [Validators.required, Validators.min(2)]],
     agree: [false, [Validators.required, Validators.requiredTrue]]
@@ -124,7 +126,26 @@ export class FormComponent implements OnInit {
     }
     
     this.fs.cotizacion(this.myForm.value).subscribe(resp => {
-      console.log(resp);       
+      console.log(resp);     
+      
+      const {icon} = resp
+      if(resp.status === 200){
+
+          Swal.fire({
+            icon: (resp.icon === 'success') ? 'success' : 'warning',
+            title: '¡Listo!',
+            text: resp.msg,
+            showConfirmButton: true          
+          })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ups ',
+          text: resp.msg,
+          showConfirmButton: true          
+        })
+      }
+      
     })
 
   }

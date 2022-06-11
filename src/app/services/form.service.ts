@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { cotizacion } from '../components/interfaces/Form';
+import { cotizacion, CotizacionRequest } from '../components/interfaces/Form';
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 
@@ -14,9 +14,9 @@ export class FormService {
 
   constructor(private http: HttpClient) { }
 
-  cotizacion(data: cotizacion): Observable<boolean> {
+  cotizacion(data: cotizacion): Observable<CotizacionRequest> {
 
-    return this.http.post<boolean>(`${this.baseURL}`, data)
+    return this.http.post<CotizacionRequest>(`${this.baseURL}`, data)
 
   }
 

@@ -19,3 +19,9 @@ export interface cotizacion {
     phone:      string;
     agree:      boolean;
 }
+
+export interface CotizacionRequest {
+    status:     number;
+    msg:        string;
+    icon:           string;
+}
